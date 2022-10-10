@@ -1,7 +1,9 @@
 provider "aws" {
 
-  region                  = var.region
-  shared_credentials_file = var.shared_credentials_file
+  region = var.region
+  access_key = "ASIA3FWJXNXVWKILSHNA"
+    secret_key = "K76VsUqK7qaFhYg9HBnt7d/B41Kw/MKrLorkCGrJ"
+    token = "FwoGZXIvYXdzEKj//////////wEaDBcOPdnLIu4TNnNM6yK2AbfhmUWftuP1MrcoIfS5dMmfaTK9Pm/7Essl0y78CP5xh7aedl6sRucQ4F5vc58iCqMtmo7B3I1bj6yUyOSveJMsE+vM9c9bc30iydSYHlbKfq/+QXXc+u5ibvvZnMgTjF82HDq4VS/kwhSSXGBeFTbBvQalX9cGIqwGZlWwlnmxrehSZj1KvFUqT80TfB45QoGl2shhaFkyTEO1cHWVzXtobjMI6hz3gSnig0gkXDgnpeDjFMwiKL7WkJoGMi3g+a3JldyCZ6DYO6d9/c12ZYILtwNSSmSQcckqJ1y9vuA3remRJuOfeT7c41s="
 }
 
 
@@ -10,10 +12,8 @@ resource "aws_vpc" "prod-vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = "true" #gives you an internal domain name
   enable_dns_hostnames = "true" #gives you an internal host name
-  enable_classiclink   = "false"
+  enable_classiclink = "false"
   instance_tenancy     = "default"
-
-
 }
 
 # Create Public Subnet for EC2
@@ -93,6 +93,7 @@ resource "aws_security_group" "ec2_allow_rule" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
@@ -101,6 +102,7 @@ resource "aws_security_group" "ec2_allow_rule" {
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
@@ -109,6 +111,7 @@ resource "aws_security_group" "ec2_allow_rule" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   egress {
@@ -251,6 +254,7 @@ resource "null_resource" "Wordpress_Installation_Waiting" {
 
 
 }
+
 
 }
 
